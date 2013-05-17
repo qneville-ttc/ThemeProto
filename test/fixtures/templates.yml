@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  theme_id: 1
+  content: MyText
+  permalink: MyString
+  career_site_id: 1
+
+two:
+  theme_id: 1
+  content: MyText
+  permalink: MyString
+  career_site_id: 1

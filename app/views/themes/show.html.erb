@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Theme name:</b>
+  <%= @theme.theme_name %>
+</p>
+
+<p>
+  <b>Theme desc:</b>
+  <%= @theme.theme_desc %>
+</p>
+
+<p>
+  <b>Career site:</b>
+  <%= @theme.career_site_id %>
+</p>
+
+<p>
+  <b>Theme filename:</b>
+  <%= @theme.theme_filename %>
+</p>
+
+
+<%= link_to 'Edit', edit_theme_path(@theme) %> |
+<%= link_to 'Back', themes_path %>

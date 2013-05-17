@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  theme_name: MyString
+  theme_desc: MyText
+  career_site_id: 1
+  theme_filename: MyString
+
+two:
+  theme_name: MyString
+  theme_desc: MyText
+  career_site_id: 1
+  theme_filename: MyString
