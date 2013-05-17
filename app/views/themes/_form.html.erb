@@ -11,23 +11,24 @@
     </div>
   <% end %>
 
+  <div class="dropzone dropped">
+
+  </div>
+
+  <a>Install</a>
+
   <div class="field">
-    <%= f.label :theme_name %><br />
-    <%= f.text_field :theme_name %>
+    <%= f.text_field :theme_name, :placeholder => "Please add a title to your theme"%>
   </div>
   <div class="field">
-    <%= f.label :theme_desc %><br />
-    <%= f.text_area :theme_desc %>
+    <%= f.text_area :theme_desc, :placeholder => "Please add a description to your theme"%>
   </div>
   <div class="field">
-    <%= f.label :career_site_id %><br />
-    <%= f.number_field :career_site_id %>
+       <%= f.hidden_field :career_site_id%>
   </div>
-  <div class="field">
-    <%= f.label :theme_filename %><br />
-    <%= f.text_field :theme_filename %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
