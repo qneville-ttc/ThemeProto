@@ -1,4 +1,7 @@
 ThemeProto::Application.routes.draw do
+  resources :career_sites
+
+
   resources :themes
 
   #map.connect    "/install/",:controller => "theme", :action => "unzip_file", :conditions => { :method => [:get,:post] }

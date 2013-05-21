@@ -1,0 +1,23 @@
+<h1>Listing career_sites</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @career_sites.each do |career_site| %>
+  <tr>
+    <td><%= career_site.name %></td>
+    <td><%= link_to 'Show', career_site %></td>
+    <td><%= link_to 'Edit', edit_career_site_path(career_site) %></td>
+    <td><%= link_to 'Destroy', career_site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Career site', new_career_site_path %>

@@ -80,4 +80,10 @@ class ThemesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def create_template
+    @theme = Theme.find(params[:id])
+    @template = @theme.templates.build(params[:template])
+
+  end
 end

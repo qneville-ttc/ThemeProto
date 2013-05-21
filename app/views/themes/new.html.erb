@@ -1,5 +1,19 @@
 <h1>New theme</h1>
 <div class="maincontainer">
+
+	<div id="fileupload">Upload</div>
+<script>
+	$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
+});
+</script>
 <%= render 'form' %>
 </div>
 <%= link_to 'Back', themes_path %>

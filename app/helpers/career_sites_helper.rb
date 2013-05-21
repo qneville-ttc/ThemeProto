@@ -1,0 +1,2 @@
+module CareerSitesHelper
+end
