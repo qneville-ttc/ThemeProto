@@ -1,0 +1,40 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+      <a href="{{ root_url }}">Career Site</a> /
+      <span>Pages</span>
+  </div>
+
+  <h2>Pages</h2>
+  {% for page in pages %}
+    <div class="entry item clearfix">
+      <h3>{{ page | link_to_page }}</h3>
+
+      <div class="contentmediahelper clearfix">
+
+        {% if page.videos.first.thumbnail_url %}
+          <div class="media media_video">
+            <a href="{{ page.url }}" title="Page: {{ page.title }}"><img src="{{ page.videos.first.thumbnail_url }}" alt="{{ page.videos.first.title }}"/></a>
+          </div>
+        {% elsif page.images.first.large_url %}
+          <div class="media media_image">
+            <a href="{{ page.url }}" title="Page: {{ page.title }}"><img src="{{ page.assets.first.large_url }}" alt="{{ page.assets.first.title }}"/></a>
+          </div>
+        {% elsif page.audios.first %}
+          <div class="media media_audio">
+             <a href="{{ page.audios.first.url }}" class="audio">{{ page.audios.first.file_name }}</a>
+          </div>
+        {% endif %}
+
+        <div class="item_content">
+          {{ page.content | truncate_html(300) }}
+        </div>
+
+      </div>
+
+      <p class="more">{{ page | link_to_page: "Learn More" }} &raquo;</p>
+
+    </div>
+  {% endfor %}
+
+{% page_required_footer %}

@@ -4,6 +4,8 @@ ThemeProto::Application.routes.draw do
 
   resources :themes
 
+  root to: 'themes#new'
+
   #map.connect    "/install/",:controller => "theme", :action => "unzip_file", :conditions => { :method => [:get,:post] }
   
   # The priority is based upon order of creation:

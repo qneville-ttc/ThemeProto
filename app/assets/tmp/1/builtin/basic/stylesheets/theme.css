@@ -1,0 +1,40 @@
+/* Layout */
+html { width: 100%; height: 100%; margin: 0; padding: 0; } 
+body { width: 100%; min-height: 100%; margin: 0; padding: 0; font-family: "Lucida Grande","Lucida Sans Unicode", Verdana, Tahoma, Arial, Helvetica, sans-serif; background: #aaaaaa; }                  
+
+a, a:link, a:visited, a:hover, a:active { color: blue; }
+a:link, a:visited { text-decoration: underline; }
+a:hover, a:active { text-decoration: none; }
+
+div.column { float: left; margin: 0 10px 0 0; }
+div.column.last { margin: 0; }
+div.body_background_expander { width: 100%; height: 100%; overflow: visible; padding-bottom: 50px; }
+
+div#container { width:970px; margin: 0 auto; }
+div#header { width:970px; overflow: hidden; background: #ffffff; text-align: center;}
+div#header h1 { margin: 15px; }
+div#header h1 a { text-decoration: none; color: #000000; }
+div#header p { margin: 15px; font-size: 1.2em; }
+div#header a.use_logo { display: block; padding: 10px; }
+div#header a.use_logo img { height: 75px; }
+div#header a.use_header_image img { width: 100%; }
+div#content { width:960px; margin: 0 auto; overflow: hidden; padding: 10px 0 0px 10px; background: #cccccc;}
+div#content .sidebar_small { width:230px; }
+div#content .sidebar_large { width:310px; }
+div#content .mainbar { width:470px; }
+div#content .mainbar_large{ width:630px; }
+
+div#fb_container { width:790px; margin: 0 auto; }
+div#fb_header { width:790px; overflow: hidden; background: #ffffff; text-align: center;}
+div#fb_viewsite {float: right; margin: 3px; font-size:14px;}
+div#fb_viewsite a {text-decoration: none; }
+div#fb_header h1 { margin: 15px; font-size: 1.3em; }
+div#fb_header h1 a { text-decoration: none; color: #000000; }
+div#fb_header p { margin: 15px; font-size: 1.2em; }
+div#fb_header a.use_logo { display: block; padding: 10px; }
+div#fb_header a.use_logo img { height: 75px; }
+div#fb_header a.use_header_image img { width: 100%; }
+div#fb_content { width:780px; margin: 0 auto; overflow: hidden; padding: 10px 0 0px 10px; background: #cccccc;}
+div#fb_content .mainbar { width:770px; }
+div#fb_content .sidebar { width:380px; }
+

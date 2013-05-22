@@ -3,11 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .maincontainer {
-	padding: 150px;
-	max-width: 500px;
+	padding: 25px;
+	min-width: 500px;
+  max-width: 960px;
 	background: #eaeaea;
 	border-radius: 3px;
-	margin: 100px auto;
+	margin: 20px auto;
 }
 
 .dropzone {

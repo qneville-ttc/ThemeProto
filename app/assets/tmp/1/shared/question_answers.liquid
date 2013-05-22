@@ -1,0 +1,21 @@
+{% page_required_header %}
+      
+  <div class="breadcrumbs">
+      <a href="{{ root_url }}">Career Site</a> /
+      <span>Questions &amp; Answers</span>
+  </div>
+
+  <h2>Questions &amp; Answers</h2>
+  
+  {% for qa in employer.question_answers %}
+    <div class="entry item clearfix">
+      <h3>{{ qa | link_to_qa  }}</h3>
+      <div class="item_content">
+        {{ qa.answer | truncate_html(300) }}
+      </div>
+      <p class="more">{{ qa | link_to_qa: "Learn More" }} &raquo;</p>
+    </div>
+  {% endfor %}
+
+{% page_required_footer %}
+

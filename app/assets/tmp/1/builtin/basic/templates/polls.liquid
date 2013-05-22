@@ -1,0 +1,11 @@
+<div id="pages" class="block">
+  <h2>Polls</h2>
+  <dl>
+    {% for poll in employer.polls %}
+      <dt>{{ h poll.title }}</dt>
+      <dd>
+        <p>{{ poll.content }}</p>
+      </dd>
+    {% endfor %}
+  </dl>
+</div>

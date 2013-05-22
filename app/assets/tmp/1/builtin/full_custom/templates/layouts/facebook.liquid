@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% careersites_required_title %}</title> <!-- Required; removing will break functionality! -->
+
+  <!-- External <head> content goes here, before "careersites_required_head_tags" -->
+
+  {% careersites_required_head_tags %} <!-- Required; removing will break functionality! must be placed inside the <head> tag after all other <head> content -->
+</head>
+
+<body id="{{ template.permalink }}" class="layout_facebook"> <!-- body id is Required; removing will break functionality! -->
+  
+  {% careersites_required_header %} <!-- Required; removing will break functionality! -->
+  
+  <div id="fb_container">
+    <div id="fb_header">
+      <div id="fb_viewsite">
+        <a href="{{ root_url }}" target="_blank">Visit career site</a>
+      </div>
+      <h1><a href="{{ root_url }}" target="_blank">{{ employer.site_name }}</a></h1>
+      {% if employer.site_tagline %}
+        <p>{{ employer.site_tagline }}</p>
+      {% endif %}
+    </div>
+    <div id="fb_content">
+      <div class="column main">
+        <!-- Where main page content goes: -->
+        {{ template_content }}
+        <!-- Where col(1) widgets go: -->                
+        {% widget_region one %}     
+        <span class="emptyContentSpacer">&nbsp;</span>               
+      </div>
+      <div class="column sidebar">
+        <!-- Where col(2) widgets go: -->
+        {% widget_region two %}
+        <span class="emptyContentSpacer">&nbsp;</span>
+      </div>
+      <div class="column sidebar last">
+        <!-- Where col(3) widgets go: -->
+        {% widget_region three %}  
+        <span class="emptyContentSpacer">&nbsp;</span>                                  
+      </div>
+    </div>
+  </div>
+  
+  {% careersites_required_footer %} <!-- Required; removing will break functionality! -->
+
+</body>
+</html>

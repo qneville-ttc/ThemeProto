@@ -1,0 +1,17 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <a href="{{ question_answers_url }}">Questions &amp; Answers</a> /
+  </div>
+  
+  <h2>{{ question_answer.question | replace:'<','&lt;' | replace:'>','&gt;' | replace:'"','&quot;'}}</h2>
+  
+  <div class="entry">
+    <h3>Answer</h3>
+    <div class="item_content">
+      {{ question_answer.answer }}
+    </div>
+  </div>
+
+{% page_required_footer %}

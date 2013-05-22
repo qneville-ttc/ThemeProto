@@ -1,0 +1,90 @@
+<!--  v2. -->
+{% page_required_header %}
+
+  <div class="cs_template_breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> / <a href="{{ jobs_url }}">Jobs</a> /
+  </div>
+  
+  <h2 class="cs_template_header">{{ job.title | html_safe }} at {{ employer.name }}</h2>
+ 
+  {% unless job.active? %}
+    <div class="cs_template_notice"><p>This job posting is no longer active</p></div>
+  {% endunless %}
+
+  {% if notice %}
+    <div class="cs_template_notice"><p>{{ notice }}</p></div>
+  {% endif %}
+   
+  <div class="cs_item cs_item_single cs_item_type_job cs_cfix">
+    
+    <div class="cs_item_content">
+      <div class="cs_item_type_job_meta">
+        <div class="cs_item_type_job_meta_updated"><strong>Updated:&nbsp;</strong><span>{{ job.updated_at | human_date  }}</span></div>
+        <div class="cs_item_type_job_meta_location"><strong>Location:&nbsp;</strong><span>{{ job.location | job_location_with_link }}</span></div>
+        {% if job.category.name %}
+          <div class="cs_item_type_job_meta_category"><strong>Category:&nbsp;</strong><span>{{ job.category | categories_breadcrumbs_with_link }}</span></div>
+        {% endif %}
+        {% if job.tags.size > 0 %}
+          <div class="cs_item_type_job_meta_tags"><strong>Tags:&nbsp;</strong><span>{{ job.tags | tag_list_with_link }}</span></div>
+        {% endif %}
+      </div>       
+      <div class="cs_item_text">
+         {{ job.description }}
+      </div>
+    </div>
+    
+    
+    {% if job.has_attached_media? %}
+      <div class="cs_item_multimedia_container">
+        {% if job.videos.size > 0 %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_video">
+          {% for video in job.videos %}
+            <div class="cs_item_multimedia cs_item_multimedia_video">
+              {{ video.code }}
+            </div>
+          {% endfor %}
+          </div>
+        {% endif %}
+        {% if job.images.size > 0 %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_image">
+          {% for image in job.images %}
+            <div class="cs_item_multimedia cs_item_multimedia_image"><a href="{{ image.url }}" title="{{ image.title }}"><img src="{{ image.large_url }}" alt="{{ image.title }}"/></a></div>
+          {% endfor %}
+          </div>
+        {% endif %}
+        {% if job.audios.size > 0  %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_audio">
+          {% for audio in job.audios %}
+            <div class="cs_item_multimedia cs_item_multimedia_audio"><a href="{{ audio.url }}" class="cs_audio">{{ audio.file_name }}</a></div>
+          {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="cs_item_multimedias cs_item_multimedias_blank">&nbsp;</div>
+    {% endif %}
+     
+    <div class="cs_item_apply">
+      {{ job | link_to_apply: "Apply for this Job"}}
+    </div>
+    
+  </div>
+  
+  <div class="cs_template_share cs_cfix">
+    <!-- share -->
+    <div class="cs_share_container cs_cfix">
+      <span class="cs_share_text">Share:</span>
+      <span class="cs_share_email"></span>
+      <span class="cs_share_google"></span>
+      <span class="cs_share_twitter"></span>
+      <span class="cs_share_facebook"></span>
+      <span class="cs_share_linkedin"></span>
+      <span class="cs_share_facebooklike"></span>
+      <script type="text/javascript">talemetry.share();</script>
+    </div>
+    <!-- share:end -->
+  </div>
+
+  {% comments %}
+   
+{% page_required_footer %}

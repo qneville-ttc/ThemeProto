@@ -1,0 +1,90 @@
+/* General */
+body, html { 
+  background-color: {{ career_site.css_page_background }}; 
+}
+
+{% if career_site.background_image } %}
+body {  background-image: url("{{ career_site.background_image.url }}"); background-repeat: {{ career_site.css_tiling_option }}; }
+{% endif %}
+
+div#header { background-color: {{ career_site.css_header_background }}; }
+div#header h1,
+div#header h1 a, #header p { color: {{ career_site.css_header_title_font }}; }
+div#content { background: {{ career_site.css_layout_background }}; }
+
+
+/* Blocks */
+.block { color: {{ career_site.css_layout_widget_content_font }}; }
+
+.block .block_container { background: {{ career_site.css_layout_widget_title_background }}; }
+.block .rounded_corners { background: {{ career_site.css_layout_widget_title_background }}; }
+.block .block_container .rounded_corners { background-color: {{ career_site.css_layout_widget_background }}; }
+.block .block_content { background-color: {{ career_site.css_layout_widget_background }}; }
+
+.block .block_header span { color: {{ career_site.css_layout_widget_title_font }}; }
+.block .block_header a { color: {{ career_site.css_layout_widget_title_font }} !important; }
+
+.block h1, .block h2, .block h3, .block h4 { color: {{ career_site.css_layout_widget_content_headers }}; }
+.block button { color: {{ career_site.css_layout_widget_content_font }}; }
+.block .highlight { background-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+.block a, .block a:link, .block a:visited, .block a:hover, .block a:active { color: {{ career_site.css_layout_widget_content_links }}; }
+a, a:link, a:visited, a:hover, a:active { color: {{ career_site.css_layout_widget_content_links }}; }
+
+
+
+/* Widget Content: Jobs */
+.block.jobs table.jobs tr th { background: {{ career_site.css_layout_widget_content_sticky_background }}; }
+.block.jobs table.jobs tr td { border-bottom-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget Content: Locations */
+.block.locations iframe { border-color: {{ career_site.css_layout_widget_content_sticky_background }};}
+
+/* Widget Content: Photos */
+.block.photos ul.media li a { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget Content: Photo */
+.block.photo a { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget Content: People */
+.block.people span.photo { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget Content: Hiring Plans */
+.block.hiring_plans li { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+.block.hiring_plans li .statusbar_bar { background: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget Content: Polls */
+.block.poll li { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+.block.poll li .statusbar_bar { background: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Widget: Organization Links */
+.block.organization_links #linkedin_widget { color: {{ career_site.css_layout_widget_content_links }}; }
+
+/* Page Views: Jobs */
+.block #jobs.page_view table.jobs tr th { background: {{ career_site.css_layout_widget_content_sticky_background }}; }
+.block #jobs.page_view table.jobs tr td { border-bottom-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Page Views: People */
+.block #people.page_view span.photo { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+/* Page Views: Person */
+.block #person.page_view span.photo { border-color: {{ career_site.css_layout_widget_content_sticky_background }}; }
+
+.block .block_container { background: {{ career_site.css_layout_widget_title_background }}; }
+
+/* Comments */
+.block .comments_container { border-top-color: {{ career_site.css_layout_widget_title_background }}; }
+
+
+/* Lightbox */
+#outerImageContainer,
+#imageDataContainer { background: {{ career_site.css_layout_widget_background }}; }
+#imageData { color: {{ career_site.css_layout_widget_content_font }}; }
+#bottomNavClose,
+#prevLink, #nextLink,
+#prevLink:hover, #prevLink:visited:hover,
+#nextLink:hover, #nextLink:visited:hover{ color: {{ career_site.css_layout_widget_content_links }}; }
+
+
+
+
+

@@ -24,6 +24,7 @@ class ThemesController < ApplicationController
   # GET /themes/new
   # GET /themes/new.json
   def new
+    logger.debug("HIIIIIIIIII")
     @theme = Theme.new
 
     respond_to do |format|
@@ -41,7 +42,10 @@ class ThemesController < ApplicationController
   # POST /themes.json
   def create
     @theme = Theme.new(params[:theme])
-
+    
+    @theme.save  ##UNCOMMENT LATER
+    @theme.init_blanks
+    
     respond_to do |format|
       if @theme.save
         format.html { redirect_to @theme, notice: 'Theme was successfully created.' }

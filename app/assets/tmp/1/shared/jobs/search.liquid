@@ -1,0 +1,75 @@
+{% page_required_header %}
+    
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <a href="{{ jobs_url }}">Jobs</a> /
+    <span>Job Search</span>
+  </div>
+ 
+  <h2>Job Search for <em>{{ query }}</em></h2>
+ 
+  {% if career_site.display_jobs_as_table %}
+
+    <table class="jobs_table">
+      <tr>
+        <th>Job</th>
+        <th>Location</th>
+      </tr>
+        {% for job in jobs %}
+          <tr class="jobs_table_item">
+            <td class="jobs_table_item_title">
+              {{ job | link_to_job }}
+              <div class="jobs_table_description">{{ job.description | strip_html | truncate: 100 }}</div>
+  	        </td>
+  	        <td class="jobs_table_item_location">{{ job.location | job_location_with_link }}</td>
+  	      </tr>
+        {% endfor %}
+    </table>
+  
+  {% else %}
+    {% for job in jobs %}
+      <div class="entry item clearfix">
+        <h3>{{ job | link_to_job }}</h3>
+        
+        <ul class="meta_info">
+          <li class="meta_location"><strong>Location:</strong> {{ job.location | job_location_with_link }}</li>
+          {% if job.category.name %}
+            <li class="meta_category"><strong>Category:</strong> {{ job.category | categories_breadcrumbs_with_link }}</li>
+          {% endif %}
+          {% if job.tags.size > 0 %}
+            <li class="meta_tags"><strong>Tags:</strong> {{ job.tags | tag_list_with_link }}</li>
+          {% endif %}
+        </ul>
+      
+        <div class="contentmediahelper clearfix">
+        
+          {% if job.videos.first.thumbnail_url %}
+            <div class="media media_video">
+              <a href="{{ job.url }}" title="Job: {{ job.title }}"><img src="{{ job.videos.first.thumbnail_url }}" alt="{{ job.videos.first.title }}"/></a>
+            </div>
+          {% elsif job.images.first.large_url %}
+            <div class="media media_image">
+              <a href="{{ job.url }}" title="Job: {{ job.title }}"><img src="{{ job.assets.first.large_url }}" alt="{{ job.assets.first.title }}"/></a>
+            </div>
+          {% elsif job.audios.first %}
+            <div class="media media_audio">
+              <a href="{{ job.audios.first.url }}" class="audio">{{ job.audios.first.file_name }}</a>
+            </div>
+          {% endif %}
+        
+          <div class="item_content">
+            {{ job.description | sanitize_rich_text | truncate_html(300) }}
+          </div>
+          
+        </div>
+        
+        <p class="more">{{ job | link_to_job: "Learn More" }} &raquo;</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="paginate">{{ jobs | paginate }}</div>
+
+  <p class="more">{{ "All Jobs" | link_to: "/jobs" }} &raquo;</p>
+      
+{% page_required_footer %}

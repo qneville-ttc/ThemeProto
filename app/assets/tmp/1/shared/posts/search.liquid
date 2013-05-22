@@ -1,0 +1,54 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+      <a href="{{ root_url }}">Career Site</a> /
+      <span>Posts</span>
+  </div>
+
+  <h2>Blog Posts</h2>
+  {% for post in posts %}
+    <div class="entry item clearfix">
+      <h3>{{ post | link_to_post }}</h3>
+
+      {% if post.imported? %}
+        <small>Imported {{ post.created_at | time_ago_in_words }} ago.</small>
+      {% else %}
+        <small>Posted {{ post.created_at | time_ago_in_words }} ago by {{ post.creator.name }}</small>
+      {% endif %}
+
+      <div class="contentmediahelper clearfix">
+
+        {% if post.videos.first.thumbnail_url %}
+          <div class="media media_video">
+            <a href="{{ post.url }}" title="Post: {{ post.title }}"><img src="{{ post.videos.first.thumbnail_url }}" alt="{{ post.videos.first.title }}"/></a>
+          </div>
+        {% elsif post.images.first.large_url %}
+          <div class="media media_image">
+            <a href="{{ post.url }}" title="Post: {{ post.title }}"><img src="{{ post.assets.first.large_url }}" alt="{{ post.assets.first.title }}"/></a>
+          </div>
+        {% elsif post.audios.first %}
+          <div class="media media_audio">
+             <a href="{{ post.audios.first.url }}" class="audio">{{ post.audios.first.file_name }}</a>
+          </div>
+        {% endif %}
+
+        <div class="item_content">
+          {% if post.imported? %}
+            {{ news_snippet.content | strip_html | truncate: 300 }}
+          {% else %}
+            {{ post.content | truncate_html(300) }}
+          {% endif %}
+        </div>
+
+        </div>
+
+      <p class="more">{{ post | link_to_post: "Learn More" }} &raquo;</p>
+
+    </div>
+
+  {% endfor %}
+
+
+{% page_required_footer %}
+
+

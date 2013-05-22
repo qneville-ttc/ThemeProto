@@ -1,0 +1,71 @@
+<!--  v2. -->
+{% page_required_header %}
+
+  <div class="cs_template_breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> / <a href="{{ pages_url }}">Pages</a> /
+  </div>
+  
+  <h2 class="cs_template_header">{{ page.title | html_safe }}</h2>
+ 
+  {% if notice %}
+    <div class="cs_template_notice"><p>{{ notice }}</p></div>
+  {% endif %}
+   
+  <div class="cs_item cs_item_single cs_item_type_page cs_cfix">
+    
+    <div class="cs_item_content">      
+      <div class="cs_item_text">
+         {{ page.content }}
+      </div>
+    </div>
+    
+    {% if page.has_attached_media? %}
+      <div class="cs_item_multimedia_container">
+        {% if page.videos.size > 0 %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_video">
+          {% for video in page.videos %}
+            <div class="cs_item_multimedia cs_item_multimedia_video">
+              {{ video.code }}
+            </div>
+          {% endfor %}
+          </div>
+        {% endif %}
+        {% if page.images.size > 0 %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_image">
+          {% for image in page.images %}
+            <div class="cs_item_multimedia cs_item_multimedia_image"><a href="{{ image.url }}" title="{{ image.title }}"><img src="{{ image.large_url }}" alt="{{ image.title }}"/></a></div>
+          {% endfor %}
+          </div>
+        {% endif %}
+        {% if page.audios.size > 0  %}
+          <div class="cs_item_multimedias cs_item_multimedias_type_audio">
+          {% for audio in page.audios %}
+            <div class="cs_item_multimedia cs_item_multimedia_audio"><a href="{{ audio.url }}" class="cs_audio">{{ audio.file_name }}</a></div>
+          {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="cs_item_multimedias cs_item_multimedias_blank">&nbsp;</div>
+    {% endif %}
+
+  </div>
+  
+  <div class="cs_template_share cs_cfix">
+    <!-- share -->
+    <div class="cs_share_container cs_cfix">
+      <span class="cs_share_text">Share:</span>
+      <span class="cs_share_email"></span>
+      <span class="cs_share_google"></span>
+      <span class="cs_share_twitter"></span>
+      <span class="cs_share_facebook"></span>
+      <span class="cs_share_linkedin"></span>
+      <span class="cs_share_facebooklike"></span>
+      <script type="text/javascript">talemetry.share();</script>
+    </div>
+    <!-- share:end -->
+  </div>
+
+  {% comments %}
+   
+{% page_required_footer %}

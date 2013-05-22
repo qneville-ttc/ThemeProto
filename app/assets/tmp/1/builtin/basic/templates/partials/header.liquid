@@ -1,0 +1,10 @@
+{% if employer.use_logo %}
+  <a href="{{ root_url }}" class="use_logo"><img src="{{ employer.logo.url }}" alt="{{ employer.site_name }} - {{ employer.site_tagline }}" border="0" /></a>
+{% elsif employer.header_image %}
+  <a href="{{ root_url }}" class="use_header_image"><img src="{{ employer.header_image }}" alt="{{ employer.site_name }} - {{ employer.site_tagline }}" border="0" /></a>
+{% else %}
+  <h1><a href="{{ root_url }}">{{ employer.site_name }}</a></h1>
+  {% if employer.site_tagline != "" %}
+    <p>{{ employer.site_tagline }}</p>
+  {% endif %}
+{% endif %}

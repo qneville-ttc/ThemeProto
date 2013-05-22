@@ -1,0 +1,37 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <a href="{{ people_url }}">People</a> /
+  </div>
+  
+  {% if person.photo %}
+  <div class="entry clearfix">
+  {% else %}
+  <div class="entry clearfix photo_empty">
+  {% endif %}
+    
+    {% if person.photo %}
+      <span class="photo"><img src="{{ person.photo.url }}" alt="{{ h(person.name) }}" /></span>
+    {% else %}
+      <span class="photo"><img src="/images/site_assets/photo_unknown.gif" alt="{{ h(person.name) }}" /></span>
+    {% endif %}
+    
+    <div class="profile">
+      <h2>{{ person | link_to_person }}</h2>
+      
+      <p class="position"><strong>{{ person.position }}</strong></p>
+      
+      <div class="item_content">
+        {{ person.description | truncate_html(300) }}
+      </div>
+      
+      {% if person.has_any_affiliations? %}
+        <h3 class="affiliations_header">Connect with {{ person.name }}</h3>
+        {% person_affiliations %}
+      {% endif %}
+      
+    </div>
+  </div>
+
+{% page_required_footer %}

@@ -1,0 +1,51 @@
+{% page_required_header %}
+  
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <span>News</span>
+  </div>
+  
+  <h2>News</h2>
+  {% for news_snippet in employer.news_snippets %}
+    <div class="entry item clearfix">
+      <h3>{{ news_snippet | link_to_post }}</h3>
+      
+      {% if news_snippet.imported? %}
+        <small>Imported {{ news_snippet.created_at | time_ago_in_words }} ago.</small>
+      {% else %}
+        <small>Posted {{ news_snippet.created_at | time_ago_in_words }} ago by {{ news_snippet.creator.name }}</small>
+      {% endif %}
+
+      <div class="contentmediahelper clearfix">
+      
+        {% if news_snippet.videos.first.thumbnail_url %}
+          <div class="media media_video">
+            <a href="{{ news_snippet.url }}" title="Post: {{ news_snippet.title }}"><img src="{{ news_snippet.videos.first.thumbnail_url }}" alt="{{ news_snippet.videos.first.title }}"/></a>
+          </div>
+        {% elsif news_snippet.images.first.large_url %}
+          <div class="media media_image">
+            <a href="{{ news_snippet.url }}" title="Post: {{ news_snippet.title }}"><img src="{{ news_snippet.assets.first.large_url }}" alt="{{ news_snippet.assets.first.title }}"/></a>
+          </div>
+        {% elsif news_snippet.audios.first %}
+          <div class="media media_audio">
+            <a href="{{ news_snippet.audios.first.url }}" class="audio">{{ news_snippet.audios.first.file_name }}</a>
+          </div>
+        {% endif %}
+      
+        <div class="item_content">
+          {% if news_snippet.imported? %}
+            {{ news_snippet.content | strip_html | truncate: 300 }}
+          {% else %}
+            {{ news_snippet.content | truncate_html(300) }}
+          {% endif %}
+        </div>
+      
+      </div>
+      
+      <p class="more">{{ news_snippet | link_to_post: "Learn More" }} &raquo;</p>
+
+    </div>
+    
+  {% endfor %}
+      
+{% page_required_footer %}

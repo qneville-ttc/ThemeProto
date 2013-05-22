@@ -1,0 +1,60 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <a href="{{ jobs_url }}">Jobs</a> /
+    <span>Archived Jobs</span>
+  </div>
+
+  <h2>Archived Jobs at {{ employer.name }}</h2>
+  
+  <div class="entry item clearfix">
+     <span>{{ employer.archived_jobs | will_paginate_liquid }}</span>
+  </div>
+
+  {% for job in employer.archived_jobs %}
+    <div class="entry item clearfix">
+      <h3>{{ job | link_to_job }}</h3>
+
+      <ul class="meta_info">
+        <li class="meta_location"><strong>Location:</strong> {{ job.location | job_location_with_link }}</li>
+        {% if job.category.name %}
+          <li class="meta_category"><strong>Category:</strong> {{ job.category | categories_breadcrumbs_with_link }}</li>
+        {% endif %}
+        {% if job.tags.size > 0 %}
+          <li class="meta_tags"><strong>Tags:</strong> {{ job.tags | tag_list_with_link }}</li>
+        {% endif %}
+      </ul>
+
+      <div class="contentmediahelper clearfix">
+
+        {% if job.videos.first.thumbnail_url %}
+          <div class="media media_video">
+            <a href="{{ job.url }}" title="Job: {{ job.title }}"><img src="{{ job.videos.first.thumbnail_url }}" alt="{{ job.videos.first.title }}"/></a>
+          </div>
+        {% elsif job.images.first.large_url %}
+          <div class="media media_image">
+            <a href="{{ job.url }}" title="Job: {{ job.title }}"><img src="{{ job.assets.first.large_url }}" alt="{{ job.assets.first.title }}"/></a>
+          </div>
+        {% elsif job.audios.first %}
+          <div class="media media_audio">
+             <a href="{{ job.audios.first.url }}" class="audio">{{ job.audios.first.file_name }}</a>
+          </div>
+        {% endif %}
+      
+        <div class="item_content">
+          {{ job.description | sanitize_rich_text | truncate_html(300) }}
+        </div>
+
+      </div>
+
+      <p class="more">{{ job | link_to_job: "Learn More" }} &raquo;</p>
+
+    </div>
+  {% endfor %}
+  
+  <div class="entry item clearfix">
+     <span>{{ employer.archived_jobs | will_paginate_liquid }}</span>
+  </div>
+  
+{% page_required_footer %}

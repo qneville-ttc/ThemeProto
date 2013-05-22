@@ -1,0 +1,54 @@
+<!--  v2. -->
+{% page_required_header %}
+
+  <div class="cs_template_breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> / <span>Pages</span>
+  </div>
+  
+  <h2 class="cs_template_header">Pages</h2>
+  
+  <div class="cs_template_paging cs_cfix">
+    <span>{{ pages | paginate }}</span>
+  </div>
+
+  <div class="cs_items cs_items_type_page">
+  
+    {% for page in pages %}
+    
+      {% assign item = page %}
+      {% assign item_url = page.url %}
+      {% assign item_title_prefix = 'Page: ' %}
+      {% if forloop.last %}
+        {% assign csItemLast = "cs_item_last" %}
+      {% endif %}
+      
+      <div class="cs_item cs_item_type_page cs_cfix {% cycle 'cs_item_even', 'cs_item_odd' %} {{csItemLast}}">
+      
+        {% if item.videos.first %}
+          <div class="cs_item_media cs_item_media_video"><a href="{{ item_url }}" title="{{item_title_prefix }}{{ item.title }}"><img src="{{ item.videos.first.thumbnail_url }}" alt="{{ item.videos.first.title }}"/></a></div>
+        {% elsif item.images.first %}
+          <div class="cs_item_media cs_item_media_image"><a href="{{ item_url }}" title="{{item_title_prefix }}{{ item.title }}"><img src="{{ item.images.first.large_url }}" alt="{{ item.images.first.title }}"/></a></div>
+        {% elsif item.audios.first  %}
+          <div class="cs_item_media cs_item_media_audio"><a href="{{ item.audios.first.url }}" class="cs_audio">{{ item.audios.first.file_name }}</a></div>
+        {% else %}
+          <div class="cs_item_media cs_item_media_blank">&nbsp;</div>
+        {% endif %}
+        
+        <div class="cs_item_content">
+          <h3>{{ page | link_to_page }}</h3>
+          <div class="cs_item_text">
+             {{ page.content | text_from_html | truncate_html(300) }}
+          </div>
+          <div class="cs_item_more"><p>{{ page | link_to_page: "Learn More" }}</p></div>
+        </div>
+      </div>
+    
+    {% endfor %}
+    
+  </div>
+  
+  <div class="cs_template_paging cs_cfix">
+    <span>{{ pages | paginate }}</span>
+  </div>
+ 
+{% page_required_footer %}

@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521180937) do
+ActiveRecord::Schema.define(:version => 20130521182649) do
 
   create_table "career_sites", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "current_theme_id"
   end
 
   create_table "temp_files", :force => true do |t|
@@ -40,6 +41,11 @@ ActiveRecord::Schema.define(:version => 20130521180937) do
     t.string   "theme_filename"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "zip_files", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

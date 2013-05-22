@@ -1,0 +1,7 @@
+<div id="fb_viewsite">
+  <a href="{{ root_url }}" target="_blank">Visit career site</a>
+</div>
+<h1><a href="{{ root_url }}">{{ employer.site_name }}</a></h1>
+{% if employer.site_tagline != "" %}
+  <p>{{ employer.site_tagline }}</p>
+{% endif %}

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% careersites_required_title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="description" content="{% meta_description %}" />
+  <meta name="keywords" content="{% meta_keywords %}" />
+  {% careersites_required_head_tags %}
+</head>
+<body id="{{ template.permalink }}">
+  
+  {% careersites_required_header %}
+  
+<div id="cs_layout_container">
+ <header id="header">
+    <!-- Site Logo Here -->
+ </header> 
+
+    
+    <div id="cs_layout_content" class="cs_cfix" style="margin-top:130px;margin-bottom:0px;">
+      <div class="cs_layout_column cs_layout_mainbar_large">
+        <!-- v2
+If this page requires content, please be sure to include the "page_required_header" 
+and "page_required_footer" tags inside curly brace percentage sign at the top 
+and bottom of your content. (as seen on other template pages)
+-->   
+        {{ template_content }}
+        {% widget_region one %}      
+
+
+        <span class="cs_layout_emptyspacer">&nbsp;</span>
+      </div> 
+      <div class="cs_layout_column cs_layout_sidebar_large cs_layout_last" style="margin-top:0px;margin-bottom:0px;color:#b7bf10;">
+        {% widget_region two %}
+        {% widget_region three %}
+        <span class="cs_layout_emptyspacer">&nbsp;</span>
+      </div>
+    </div>
+  </div>
+  
+<footer id="footer">
+    <div class="avada-row">
+          <!--  <ul class="social-networks">
+                <li><a class="facebook" href="http://www.facebook.com/talemetry">facebook</a>
+          <div class="popup">
+            <div class="holder">
+              <p>Facebook</p>
+            </div>
+          </div>
+        </li>
+                        <li><a class="twitter" href="http://www.twitter.com/talemetry">twitter</a>
+          <div class="popup">
+            <div class="holder">
+              <p>Twitter</p>
+            </div>
+          </div>
+        </li>
+                        <li><a class="linked-in" href="http://www.linkedin.com/company/15847">linked in</a>
+          <div class="popup">
+            <div class="holder">
+              <p>LinkedIn</p>
+            </div>
+          </div>
+        </li>
+                        <li><a class="rss" href="www.talemetrytoday.com/rss/feed">rss</a>
+          <div class="popup">
+            <div class="holder">
+              <p>RSS</p>
+            </div>
+          </div>
+        </li>
+                                <li class="custom"><a class="youtube" href="http://www.youtube.com/talemetry"><img alt="" src="http://talemetrytoday.com/talemetrytest2/wp-content/themes/Avada/images/youtube.png"></a>
+          <div class="popup">
+            <div class="holder">
+              <p>Youtube</p>
+            </div>
+          </div>
+        </li>
+          -->                                                                                                                   
+            <ul class="copyright">
+        <li>Copyright 2013 {{ career_site.site_name }} | All Rights Reserved  </li>
+      </ul>
+    </div><!--Keep -->
+  </footer>
+
+  {% careersites_required_footer %}
+
+</body>
+  <!--jQuery Scripting here for Now -->
+
+  <script>
+
+    /* mobile handler */
+
+    $(document).ready(function() {
+
+      //Clamps footer to bottom 
+      if($("body").height() < $(window).height()) {
+        $("footer").css("position", "absolute");  
+      }
+
+      //Initial Window Load
+      if($(window).width() < 640) {
+        $(".cs_layout_sidebar_large .cs_header").each(function () {
+            $(this).css("background-position", "0px 0px");
+            $(this).siblings().slideUp(100);
+        });
+      }     
+      //
+      $(".cs_layout_sidebar_large .cs_header").click(function() {
+          if($(this).hasClass("mui-open")) {
+             $(this).removeClass("mui-open");
+             $(this).addClass("mui-closed");
+              $(this).css("background-position", "0px 0px");
+              $(this).siblings().slideUp(100);
+          } else if ($(this).hasClass("mui-closed")){
+             $(this).removeClass("mui-closed");
+             $(this).addClass("mui-open");       
+             $(this).css("background-position", "0px -36px");
+             $(this).siblings().slideDown(100);        
+          } else {
+             $(this).removeClass("mui-closed");
+             $(this).addClass("mui-open");       
+             $(this).css("background-position", "0px -36px");
+             $(this).siblings().slideDown(100);    
+          }
+          
+      });
+    });
+    $(window).resize(function() {
+      if($(window).width() > 640) {
+        $(".cs_layout_sidebar_large .cs_header").each(function () {
+            $(this).removeClass("mui-closed");
+            $(this).removeClass("mui-open");
+            $(this).siblings().slideDown(100);      
+        });
+      } else {
+        $(".cs_layout_sidebar_large .cs_header").each(function () {
+            $(this).css("background-position", "0px 0px");
+            $(this).siblings().slideUp(100);
+        });
+      }
+
+      if($("body").height() < $(window).height()) {
+        $("footer").css("position", "absolute");  
+      } else {
+        $("footer").css("position", "static");  
+      }
+
+    });
+
+
+
+  </script>
+
+</html>

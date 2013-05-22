@@ -1,0 +1,83 @@
+{% page_required_header %}
+
+  <div class="breadcrumbs">
+    <a href="{{ root_url }}">Career Site</a> /
+    <a href="{{ posts_url }}">Posts</a> /
+  </div>
+  
+  <div class="entry">
+
+    <h2>{{ post.title | replace:'<','&lt;' | replace:'>','&gt;' | replace:'"','&quot;'}}</h2>
+    {% if post.imported? %}
+      <small>
+        Imported {{ post.created_at | time_ago_in_words }} ago.
+        <a href="{{ post.imported_url }}" title="{{ post.title }}" target="_blank" class="new_window">See original article</a>
+      </small>
+    {% else %}
+      <small>Posted {{ post.created_at | time_ago_in_words }} ago by {{ post.creator.name }}</small>
+    {% endif %}
+    
+    {% if post.audios.size > 0 %}
+      <ul class="media media_audios clearfix">
+        {% for audio in post.audios %}
+         <li class="media_audio"><a href="{{ audio.url }}" class="audio">{{ audio.file_name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    <div class="item_content">
+      {{ post.content }}
+    </div>
+    
+    {% if post.images.size > 0 %}
+      <ul class="media media_images clearfix">
+        {% for asset in post.images %}
+          <li class="media_image"><a href="{{ asset.url }}" title="{{ asset.title }}" rel="imagebox_media" class="imagebox_item"><img src="{{ asset.large_url }}" alt="{{ asset.title }}"/></a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if post.videos.size > 0 %}
+      <ul class="media media_videos clearfix">
+        {% for video in post.videos %}
+         <li class="media_video">
+            {{ video.code }}
+         </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    {% if post.imported? %}
+      <p class="original"><a href="{{ post.imported_url }}" title="{{ post.title }}" target="_blank" class="new_window">See original article</a></p>
+    {% endif %}
+
+    <div class="share clearfix">
+
+      <!-- AddToAny BEGIN -->
+      <div class="a2a_kit a2a_default_style">
+        <a class="a2a_dd" href="http://www.addtoany.com/share_save">Share</a>
+        <span class="a2a_divider"></span>
+        <a class="a2a_button_facebook"></a>
+        <a class="a2a_button_twitter"></a>
+        <a class="a2a_button_linkedin"></a>
+      </div>
+      <script type="text/javascript">
+        var a2a_config = a2a_config || {};
+        a2a_config.onclick = 1;
+        a2a_config.color_main = "CCCCCC";
+        a2a_config.color_border = "999999";
+        a2a_config.color_link_text = "333333";
+        a2a_config.color_link_text_hover = "333333";
+        a2a_config.prioritize = ["linkedin", "facebook", "twitter", "digg", "google_buzz", "yahoo_buzz", "reddit", "stumbleupon", "delicious", "google_bookmarks"];
+      </script>
+      <script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
+      <!-- AddToAny END -->
+      
+    </div>
+    
+  </div>
+
+  {% comments %}
+
+{% page_required_footer %}
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% careersites_required_title %}</title>
+  {% careersites_required_head_tags %}
+</head>
+
+<body id="{{ template.permalink }}"> 
+
+  <div class="body_background_expander">
+
+    {% careersites_required_header %}
+  
+    <div id="container">
+
+      <div id="header" class="clearfix">
+        {% include_template "partials/header" %}
+      </div>
+
+      <div id="content" class="clearfix">
+        <div class="column mainbar">
+          {{ template_content }}
+          {% widget_region one %}
+          <span class="emptyContentSpacer">&nbsp;</span>
+        </div>
+        <div class="column sidebar_small">
+          {% widget_region two %}
+          <span class="emptyContentSpacer">&nbsp;</span>
+        </div>
+        <div class="column sidebar_small last">
+          {% widget_region three %}
+          <span class="emptyContentSpacer">&nbsp;</span>
+        </div>
+
+      </div>
+
+    </div>
+    
+    {% careersites_required_footer %}
+
+  </div>
+
+</body>
+
+</html>
