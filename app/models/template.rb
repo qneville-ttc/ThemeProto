@@ -3,6 +3,8 @@ class Template < ActiveRecord::Base
   
   belongs_to :theme
 
+  
+
 =begin
   # Finds a file based template by looking in path.
   class FileFinder

@@ -1,5 +1,5 @@
 <h1>Available Themes</h1>
-
+<!--
 <table>
   <tr>
     <th>Theme name</th>
@@ -10,6 +10,30 @@
     <th></th>
     <th></th>
   </tr>
+-->
+
+<div id="themeswitcher">
+  <div id="side_panel">
+    <div id="current_preview">
+      <div id="preview">
+        
+        <img src="/images/site_assets/theme-previews/loading-preview.png">
+        <span>Loading Preview...</span>
+      </div>
+    </div>
+
+  </div>
+  <div id="main_panel">
+    <div id="default">
+      <h4>Default Themes</h4>
+      <p>Default themes provided by Talemetry.  Editing should lead to duplication into a custom theme.</p>
+    </div>
+    <div id="custom">
+      <h4>Custom Themes</h4>
+      <p>One does not simply receive custom themes</p>
+    </div>
+  </div>
+</div>
 
 <% @themes.each do |theme| %>
   <tr>
@@ -17,13 +41,126 @@
     <td><%= theme.theme_desc %></td>
     <td><%= theme.career_site_id %></td>
     <td><%= theme.theme_filename %></td>
-    <td><%= link_to 'Show', theme %></td>
+    <td><%= link_to(image_tag("/images/edit.png", :alt => "PromoImage"), edit_theme_path(theme))%></td>
     <td><%= link_to 'Edit', edit_theme_path(theme) %></td>
     <td><%= link_to 'Destroy', theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
+
+
 <br />
+
+<script>
+
+ (function($){ 
+    
+    $(document).ready(function(){
+
+      //initialize
+
+      var theme_current = "CurrentTheme"
+      var themes = new Array();
+
+      var description;
+      var version;
+
+      //Set current preview image and text
+      $("#preview").find("img").attr("src","/images/site_assets/theme-previews/"+theme_current+".png")
+      $("#preview span").text(theme_current);
+
+      var index = 0;
+
+
+      <% @themes.each do |theme| %>
+      themes.push('<%= theme.theme_name %>');
+      description = '<%= theme.theme_desc %>'
+
+          // Two of four cases now.  Default and user themes available.  Default themes should be cloned before being modified.
+          if(theme_current == '<%= theme.theme_name %>') {
+            $("#themeswitcher>#main_panel>#default").append('<div class="theme_thumb selected" thm="'+index+'" ><div class="thumbnail" style="background-image: url(<%= theme["preview"] %>)"><div class="thumb_tooltip"><small><strong>'+themes[index]+':</strong><br/>'+description+'</small><div class="options"><%=  link_to image_tag("edit.png", :border => 0 ) %><%= link_to image_tag("duplicate.png", :border => 0 ), :title => "Duplicate Theme" %><%= link_to image_tag("trash.png", :border => 0 ) %></div></div><img class="loader" src="/images/site_assets/theme-previews/ajax-load-32px.gif"/></div><a class="disabled" id="">Active</a></div>');
+          } else {
+            $("#themeswitcher>#main_panel>#default").append('<div class="theme_thumb" thm="'+index+'" ><div class="thumbnail" style="background-image: url(<%= theme["preview"] %>)"><div class="thumb_tooltip"><small><strong>'+themes[index]+':</strong><br/>'+description+'</small><div class="options"><%= link_to image_tag("edit.png", :border => 0 )%><%= link_to image_tag("duplicate.png", :border => 0 ), :title => "Duplicate Theme" %><%= link_to image_tag("trash.png", :border => 0 ) %></div></div><img class="loader" src="/images/site_assets/theme-previews/ajax-load-32px.gif"/></div><a class="settheme" id="">Set Theme</a></div>');
+          }
+          index++;   
+        <% end %>
+
+
+
+      //Event handlers for theme changes
+      var idClicked;
+      var waiting = false;
+      $(".settheme").bind('click',function() {
+
+        if(!$(this).hasClass("selected") && !waiting) {
+          //reset other items
+
+          $(".theme_thumb a").removeClass("disabled");
+          $(".theme_thumb").removeClass("selected");
+          $(".theme_thumb a").text("Set Theme");
+
+          //prevent additional clicks until success
+          waiting = true;
+
+          //get thm="x" to index themes array
+          idClicked = $(this).attr('thm')
+          
+          //do this to make it look pretty and like the new theme is being loaded
+          //TODO: Put this into the AJAX call
+          $(this).find(".loader").addClass('load');
+          $(this).find("a").addClass("disabled");
+          $(this).find("a").text("Setting...");
+          $(this).addClass("selected");
+
+          //perform action: change_theme via AJAX          
+          //old link ***link_to "Set Theme", "update_theme/#{theme["title"]}", :method => :post **
+
+          var loader = $(this).find(".loader");
+          var button = $(this).find("a");
+          var thumb  = $(this);
+
+          $.ajax({
+            type: ('POST'),
+            url:  ('update_theme/'+themes[idClicked]),
+            success: function(data){
+              loader.removeClass('load');
+              button.text("Active");
+              $("#preview").queue(function() {
+                $(this).find("span").fadeOut(100);
+                $(this).find("img").fadeOut(100);
+                $(this).dequeue();
+              }).queue(function() {
+                $(this).find("span").delay(200).text(themes[idClicked]) //TODO: HUMANIZE THIS
+                $(this).find("img").delay(200).attr("src","/images/site_assets/theme-previews/"+themes[idClicked]+".png")
+                $(this).dequeue();
+              }).queue(function() {
+                $(this).find("span").delay(500).slideDown('fast');
+                $(this).find("img").delay(400).fadeIn('200')
+                $(this).dequeue();
+              })
+              
+              waiting = false
+            },
+            error: function() {
+              alert("Theme could not be changed to "+themes[idClicked])
+            }
+
+          });
+ 
+
+          //on fail
+          //send alert "AJAX Fail" for now 
+
+        }
+        
+
+      })
+
+
+    })
+    
+  })(jQuery);
+</script>
 
 <%= link_to 'New Theme', new_theme_path %>

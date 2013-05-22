@@ -21,6 +21,9 @@ class ThemesController < ApplicationController
     end
   end
 
+  def duplicate
+  end
+
   # GET /themes/new
   # GET /themes/new.json
   def new
@@ -36,6 +39,13 @@ class ThemesController < ApplicationController
   # GET /themes/1/edit
   def edit
     @theme = Theme.find(params[:id])
+    @templates = Template.where("theme_id = ?", params[:id])
+  end
+
+  # GET /themes/:id/template/:id
+  def get_content
+    @content = 
+    
   end
 
   # POST /themes

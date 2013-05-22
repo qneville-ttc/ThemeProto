@@ -1,6 +1,99 @@
-<h1>Editing theme</h1>
+<h1>Editing theme:</h1>
+<div id="themeswitcher">
+	<div id="side_panel">
+		<small>Template Files</small>
+	  <ul>
+	  		<li class="filetab active">Default Colors</li>
+		  <% @templates.each do |template| %>
+		  	<li class="filetab" ref-id="<%= template.id%>"><%= template.permalink.split("/").last(2).join("/").gsub('.liquid','') %></li>
+		  <% end %>
+	  </ul>
 
-<%= render 'form' %>
+	  </div>
+	  <div id="main_panel" class="editor">
 
-<%= link_to 'Show', @theme %> |
+	  	<div class="colorsview">
+	  		<h4>Edit Site Colors</h4>
+	  		<p>This feature has not been implemented</p>
+	  	</div>
+
+	  	<div class="textview">
+	  		<textarea class="editorwindow">aoisndoiasndoi oiasjdo asidj asdipjoaiosd ao</textarea>
+	  	</div>
+
+	  </div>
+	</div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    	
+    	//Initialize
+    	$(".textview").hide();
+	$('.editorwindow').each(function() {
+        	var editor = CodeMirror.fromTextArea(this, {
+        		lineNumbers : true,
+        		mode: 'html',
+        		matchBrackets : true,
+        		autoCloseTags: true
+			
+		});
+	})
+
+    	$('.filetab').bind('click', function() {
+
+    		if($(this).attr('ref-id')) {	//Hide '.colorsview'.  If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, load new.  Else, break.
+    		
+    			$(".colorsview").hide();
+    			$(".textview").show();
+    			$(".filetab").removeClass("active");
+    			$(this).addClass("active")
+
+    			$.ajax({
+		            type: ('POST'),
+		            url:  ('update_theme/'+themes[idClicked]),
+		            success: function(data){
+		              loader.removeClass('load');
+		              button.text("Active");
+		              $("#preview").queue(function() {
+		                $(this).find("span").fadeOut(100);
+		                $(this).find("img").fadeOut(100);
+		                $(this).dequeue();
+		              }).queue(function() {
+		                $(this).find("span").delay(200).text(themes[idClicked]) //TODO: HUMANIZE THIS
+		                $(this).find("img").delay(200).attr("src","/images/site_assets/theme-previews/"+themes[idClicked]+".png")
+		                $(this).dequeue();
+		              }).queue(function() {
+		                $(this).find("span").delay(500).slideDown('fast');
+		                $(this).find("img").delay(400).fadeIn('200')
+		                $(this).dequeue();
+		              })
+		              
+		              waiting = false
+		            },
+		            error: function() {
+		              alert("Theme could not be changed to "+themes[idClicked])
+		            }
+
+		        });
+
+    		} else {						//If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, show '.colorsview'.  Else, break.
+    		
+    			$(".textview").hide();
+    			$(".colorsview").show();
+    			$(".filetab").removeClass("active");
+    			$(this).addClass("active")
+
+    		}
+
+    	});
+
+    });
+
+
+</script>
+
+<!--<%= render 'form' %>-->
+
+<%= link_to 'Show', @theme %> 
 <%= link_to 'Back', themes_path %>

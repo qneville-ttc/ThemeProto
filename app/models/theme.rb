@@ -7,15 +7,6 @@ class Theme < ActiveRecord::Base
  public
   	def init_blanks
 
-=begin
-  		default = self.templates.new
-  			default.permalink = "layouts/default.html.liquid"
-  			default.save!
-  		
-  		facebook = self.templates.new
-  			facebook.permalink = "layouts/facebook.html.liquid"
-  			facebook.save!
-=end
       logger.debug("Oh hey man.  Guess it's working afterall...")
       tmp_assets = File.join(Rails.root,"app/assets/tmp")
 
@@ -30,10 +21,6 @@ class Theme < ActiveRecord::Base
         logger.debug "record written -> #{path}" 
       end
 
-  		#templates.each do |template|
-  		#		template.save!
-  		#	end
-  		#end
 
   	end
 

@@ -4,7 +4,9 @@ ThemeProto::Application.routes.draw do
 
   resources :themes
 
-  root to: 'themes#new'
+  root to: 'themes#index'
+
+  map.connect "themes/:id/get_template/:template_id",:controller => "themes", :action => "get_template", :conditions => { :method => [:get] }
 
   #map.connect    "/install/",:controller => "theme", :action => "unzip_file", :conditions => { :method => [:get,:post] }
   
