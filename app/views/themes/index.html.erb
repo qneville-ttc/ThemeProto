@@ -1,17 +1,4 @@
 <h1>Available Themes</h1>
-<!--
-<table>
-  <tr>
-    <th>Theme name</th>
-    <th>Theme desc</th>
-    <th>Career site</th>
-    <th>Theme filename</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
--->
-
 <div id="themeswitcher">
   <div id="side_panel">
     <div id="current_preview">
@@ -35,18 +22,6 @@
   </div>
 </div>
 
-<% @themes.each do |theme| %>
-  <tr>
-    <td><%= theme.theme_name %></td>
-    <td><%= theme.theme_desc %></td>
-    <td><%= theme.career_site_id %></td>
-    <td><%= theme.theme_filename %></td>
-    <td><%= link_to(image_tag("/images/edit.png", :alt => "PromoImage"), edit_theme_path(theme))%></td>
-    <td><%= link_to 'Edit', edit_theme_path(theme) %></td>
-    <td><%= link_to 'Destroy', theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
 
 
@@ -85,8 +60,6 @@
           }
           index++;   
         <% end %>
-
-
 
       //Event handlers for theme changes
       var idClicked;

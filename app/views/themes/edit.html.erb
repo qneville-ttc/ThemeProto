@@ -21,6 +21,10 @@
 	  		<textarea class="editorwindow">aoisndoiasndoi oiasjdo asidj asdipjoaiosd ao</textarea>
 	  	</div>
 
+	  	<button class="save">Save Changes</button>
+	  	<button class="revert">Revert</button>
+	  	<button class="preview">Preview</button>
+
 	  </div>
 	</div>
 </div>
@@ -30,52 +34,45 @@
     	
     	//Initialize
     	$(".textview").hide();
-	$('.editorwindow').each(function() {
-        	var editor = CodeMirror.fromTextArea(this, {
-        		lineNumbers : true,
-        		mode: 'html',
-        		matchBrackets : true,
-        		autoCloseTags: true
-			
-		});
-	})
+	
 
     	$('.filetab').bind('click', function() {
 
     		if($(this).attr('ref-id')) {	//Hide '.colorsview'.  If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, load new.  Else, break.
-    		
-    			$(".colorsview").hide();
-    			$(".textview").show();
-    			$(".filetab").removeClass("active");
-    			$(this).addClass("active")
+    			var idClicked = $(this).attr('ref-id');
+    			
 
-    			$.ajax({
-		            type: ('POST'),
-		            url:  ('update_theme/'+themes[idClicked]),
-		            success: function(data){
-		              loader.removeClass('load');
-		              button.text("Active");
-		              $("#preview").queue(function() {
-		                $(this).find("span").fadeOut(100);
-		                $(this).find("img").fadeOut(100);
-		                $(this).dequeue();
-		              }).queue(function() {
-		                $(this).find("span").delay(200).text(themes[idClicked]) //TODO: HUMANIZE THIS
-		                $(this).find("img").delay(200).attr("src","/images/site_assets/theme-previews/"+themes[idClicked]+".png")
-		                $(this).dequeue();
-		              }).queue(function() {
-		                $(this).find("span").delay(500).slideDown('fast');
-		                $(this).find("img").delay(400).fadeIn('200')
-		                $(this).dequeue();
-		              })
-		              
-		              waiting = false
-		            },
-		            error: function() {
-		              alert("Theme could not be changed to "+themes[idClicked])
-		            }
-
+    			if (confirm('Are you sure you want to save this thing into the database?')) {
+					    // AJAX CALL TO REPLACE VISIBLE CODE WINDOW
+	    			$.ajax({
+			        type: ('GET'),
+			        url:  ('get_content/'+idClicked),
+			        success: function(data){
+			        	$(".colorsview").hide();
+			    			$(".filetab").removeClass("active");
+			    			$(".filetab[ref-id="+idClicked+"]").addClass("active")
+			        	$(".textview").hide(100).delay(100).show(100);
+			        	$(".editorwindow").replaceWith('<textarea class="editorwindow">'+data+'</textarea>');
+			        	$(".CodeMirror").remove();
+			        	$('.editorwindow').each(function() {
+				        	var editor = CodeMirror.fromTextArea(this, {
+				        		lineNumbers : true,
+				        		mode: 'html',
+				        		matchBrackets : true,
+				        		autoCloseTags: true,
+				        		viewportMargin: Infinity
+			        		})
+								});
+			        },
+			        error: function(error) {
+			        	alert("Theme could not be loaded! Reason: "+error)
+			        }
 		        });
+				} else {
+					
+				}
+
+    			
 
     		} else {						//If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, show '.colorsview'.  Else, break.
     		

@@ -6,7 +6,8 @@ ThemeProto::Application.routes.draw do
 
   root to: 'themes#index'
 
-  map.connect "themes/:id/get_template/:template_id",:controller => "themes", :action => "get_template", :conditions => { :method => [:get] }
+  match "themes/:theme_id/get_content/:template_id", :controller => "themes", :action => "get_content", :conditions => { :method => [:get] }
+  match "career_sites/:theme_id/get_content/:template_id", :controller => "career_sites_controller", :action => "get_content", :conditions => { :method => [:get] }
 
   #map.connect    "/install/",:controller => "theme", :action => "unzip_file", :conditions => { :method => [:get,:post] }
   

@@ -44,8 +44,10 @@ class ThemesController < ApplicationController
 
   # GET /themes/:id/template/:id
   def get_content
-    @content = 
-    
+    theme_id = params["theme_id"]
+    template_id = params["template_id"]
+    @template = Template.where("theme_id = ? AND id = ?", theme_id, template_id).first
+    render :text => @template.content
   end
 
   # POST /themes
