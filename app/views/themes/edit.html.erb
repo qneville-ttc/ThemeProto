@@ -12,70 +12,69 @@
 	  </div>
 	  <div id="main_panel" class="editor">
 
-	  	<div class="colorsview">
-	  		<h4>Edit Site Colors</h4>
-	  		<p>This feature has not been implemented</p>
-	  	</div>
+		  	<form id="template-form" method="post">
 
-	  	<div class="textview">
-	  		<textarea class="editorwindow">aoisndoiasndoi oiasjdo asidj asdipjoaiosd ao</textarea>
-	  	</div>
+			  	<div class="colorsview">
+			  		<h4>Edit Site Colors</h4>
+			  		<p>This feature has not been implemented</p>
+			  	</div>
 
-	  	<button class="save">Save Changes</button>
-	  	<button class="revert">Revert</button>
-	  	<button class="preview">Preview</button>
+			  	<div class="textview">
+			  		<input id="ref-id" name="template[ref-id]" type="hidden" value="col">
+			  		<textarea id="editorwindow" name="template[editorwindow]" onchange="fileEdited()"></textarea>
+			  	</div>
+			</form>
+
+			<button class="save">Save Changes</button>
+		  	<button class="revert">Revert</button>
+		  	<button class="preview">Preview</button>
+
 
 	  </div>
 	</div>
 </div>
 
 <script>
-  $(document).ready(function(){
-    	
+
+// Globals
+var temp_text_contents
+var saved_text
+var text_modified = false;
+
+var idClicked
+var editor
+
+function fileEdited() {
+	text_modified = true;
+}
+
+	$(document).ready(function(){
+
     	//Initialize
     	$(".textview").hide();
 	
-
     	$('.filetab').bind('click', function() {
 
     		if($(this).attr('ref-id')) {	//Hide '.colorsview'.  If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, load new.  Else, break.
-    			var idClicked = $(this).attr('ref-id');
     			
-
-    			if (confirm('Are you sure you want to save this thing into the database?')) {
-					    // AJAX CALL TO REPLACE VISIBLE CODE WINDOW
-	    			$.ajax({
-			        type: ('GET'),
-			        url:  ('get_content/'+idClicked),
-			        success: function(data){
-			        	$(".colorsview").hide();
-			    			$(".filetab").removeClass("active");
-			    			$(".filetab[ref-id="+idClicked+"]").addClass("active")
-			        	$(".textview").hide(100).delay(100).show(100);
-			        	$(".editorwindow").replaceWith('<textarea class="editorwindow">'+data+'</textarea>');
-			        	$(".CodeMirror").remove();
-			        	$('.editorwindow').each(function() {
-				        	var editor = CodeMirror.fromTextArea(this, {
-				        		lineNumbers : true,
-				        		mode: 'html',
-				        		matchBrackets : true,
-				        		autoCloseTags: true,
-				        		viewportMargin: Infinity
-			        		})
-								});
-			        },
-			        error: function(error) {
-			        	alert("Theme could not be loaded! Reason: "+error)
-			        }
-		        });
-				} else {
-					
-				}
-
+    			idClicked = $(this).attr('ref-id');
     			
+    			if(text_modified) {
+    				if(confirm("You have unsaved changes.  Continue?")) {
+						// AJAX CALL TO REPLACE VISIBLE CODE WINDOW
+						$("#ref-id").value = idClicked;
+						loadTextArea();
+    				}
+    			} else {
+    				$("#ref-id").value = idClicked;
+    				loadTextArea();
+    			}
 
     		} else {						//If changes have been made, ask for confirmation first.  If yes, continue without saving -> remove related textbox, show '.colorsview'.  Else, break.
-    		
+    			
+    			//colors view now
+    			temp_text_contents = ''
+    			$("#ref-id").value = "col";
     			$(".textview").hide();
     			$(".colorsview").show();
     			$(".filetab").removeClass("active");
@@ -84,8 +83,84 @@
     		}
 
     	});
+		$('#template-form').submit(function() {
+
+			saveTextArea();
+			
+		});
+
+		$('.revert').bind('click',function() {
+			if(text_modified) {
+				if(confirm("Discard changes and revert to last save?")) {
+			
+				   	loadTextArea();
+				
+				} else {
+					//do nothing
+				}
+
+			} else {
+				//do nothing
+			}
+		})
+
+		$('.save').bind('click',function() {	
+			saveTextArea();
+		});
 
     });
+
+//////////////// AJAX METHODS /////////////////////
+
+function loadColors() {
+
+}
+
+function saveColors() {
+
+}
+
+function loadTextArea() {
+	$.ajax({
+        type: ('GET'),
+        url:  ('get_content/'+idClicked),
+        success: function(data) {
+
+        	temp_text_contents = data
+
+        	$(".colorsview").hide();
+    		$(".filetab").removeClass("active");
+    		$(".filetab[ref-id="+idClicked+"]").addClass("active")
+        	$(".textview").show();
+        	$("#editorwindow").replaceWith('<textarea id="editorwindow" onchange="fileEdited()">'+data+'</textarea>');
+        	
+        	text_modified = false
+        },
+        error: function(error) {
+        	alert("Theme could not be loaded! Reason: "+error)
+        }
+    });
+}
+
+function saveTextArea() {
+	$.ajax({
+        type: ('POST'),
+        data: { template_id: idClicked,
+        		content: document.getElementById("editorwindow").value
+        },
+        url:  ('save/'),
+        success: function(post) {
+        	alert("Successfully saved template=>"+post);
+
+        	text_modified = false
+        },
+        error: function(error) {
+        	alert("not saved: "+error);
+        }
+    });
+}
+
+
 
 
 </script>

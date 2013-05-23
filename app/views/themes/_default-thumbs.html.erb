@@ -1,0 +1,18 @@
+<!-- This is a theme thumbnail button used on index.html.erb -->
+<% @themes.each do |theme| %>
+
+
+	<div class="theme_thumb" thm="<%= theme.id %>" >
+	  <div class="thumbnail" style="background-image: url()">
+	    <div class="thumb_tooltip"><small><strong><%= theme.theme_name %>:</strong><br/><%= theme.theme_desc %></small>
+	      <div class="options">
+	      	<%= image_tag("duplicate.png", :border => 0, :class => "duplicate_theme", :id_rel => "#{theme.id}", :alt => "Clone Theme", :style => "float:right;", :title => "Default themes can only be cloned" ) %>
+	      </div>
+	    </div>
+	    <img class="loader" src="/images/site_assets/theme-previews/ajax-load-32px.gif"/>
+	  </div>
+	  <a class="" id="">Set Theme</a>
+	</div>
+
+
+<% end %>

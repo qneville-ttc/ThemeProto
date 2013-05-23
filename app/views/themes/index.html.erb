@@ -11,21 +11,25 @@
 
   </div>
   <div id="main_panel">
-    <div id="default">
+    <div id="default clearfix">
       <h4>Default Themes</h4>
       <p>Default themes provided by Talemetry.  Editing should lead to duplication into a custom theme.</p>
-    </div>
-    <div id="custom">
+
+      <%= render 'themes/default-thumbs' %>
+
+    </div> <!-- End Default Themes Container -->
+
+    <div class="clearfix"></div> <!-- Clearfix - Don't put anything in here -->
+
+    <div id="custom clearfix"> 
       <h4>Custom Themes</h4>
       <p>One does not simply receive custom themes</p>
-    </div>
+
+      <%= render 'themes/custom-thumbs' %>
+
+    </div> <!-- End Custom Themes Container -->
   </div>
 </div>
-
-
-
-
-<br />
 
 <script>
 
@@ -35,7 +39,7 @@
 
       //initialize
 
-      var theme_current = "CurrentTheme"
+      var theme_current = 23
       var themes = new Array();
 
       var description;
@@ -48,22 +52,74 @@
       var index = 0;
 
 
-      <% @themes.each do |theme| %>
-      themes.push('<%= theme.theme_name %>');
-      description = '<%= theme.theme_desc %>'
-
-          // Two of four cases now.  Default and user themes available.  Default themes should be cloned before being modified.
-          if(theme_current == '<%= theme.theme_name %>') {
-            $("#themeswitcher>#main_panel>#default").append('<div class="theme_thumb selected" thm="'+index+'" ><div class="thumbnail" style="background-image: url(<%= theme["preview"] %>)"><div class="thumb_tooltip"><small><strong>'+themes[index]+':</strong><br/>'+description+'</small><div class="options"><%=  link_to image_tag("edit.png", :border => 0 ) %><%= link_to image_tag("duplicate.png", :border => 0 ), :title => "Duplicate Theme" %><%= link_to image_tag("trash.png", :border => 0 ) %></div></div><img class="loader" src="/images/site_assets/theme-previews/ajax-load-32px.gif"/></div><a class="disabled" id="">Active</a></div>');
-          } else {
-            $("#themeswitcher>#main_panel>#default").append('<div class="theme_thumb" thm="'+index+'" ><div class="thumbnail" style="background-image: url(<%= theme["preview"] %>)"><div class="thumb_tooltip"><small><strong>'+themes[index]+':</strong><br/>'+description+'</small><div class="options"><%= link_to image_tag("edit.png", :border => 0 )%><%= link_to image_tag("duplicate.png", :border => 0 ), :title => "Duplicate Theme" %><%= link_to image_tag("trash.png", :border => 0 ) %></div></div><img class="loader" src="/images/site_assets/theme-previews/ajax-load-32px.gif"/></div><a class="settheme" id="">Set Theme</a></div>');
-          }
-          index++;   
-        <% end %>
-
       //Event handlers for theme changes
       var idClicked;
       var waiting = false;
+
+      $(".add").bind('click',function() {
+        window.location = "themes/new" 
+      });
+
+      $(".trash_theme").bind('click',function() {              //NOT WORKING
+        if(confirm("Are you sure you want to remove this theme?")){
+
+
+         idClicked = $(this).attr("id_rel")
+
+            
+               $.ajax({
+                  type: ('POST'),
+                  url:  ('themes/trash/'),
+                  data: {
+                     id: idClicked
+                  },
+                  success: function(data) {
+
+                     $('.theme_thumb[thm="'+idClicked+'"]').hide(100);
+                     $('.theme_thumb[thm="'+idClicked+'"]').delay(100).remove();
+                     
+                  },
+                  error: function(error) {
+                     alert("Theme could not be Removed! Reason: "+error)
+                  }
+               });
+
+        } else {
+          //do nothing
+        }
+      });
+
+
+
+      $(".duplicate_theme").bind('click',function() {
+         idClicked = $(this).attr("id_rel")
+
+         alert(idClicked)
+
+         $.ajax({
+          type: ('POST'),
+          url:  ('themes/clone'),
+          data: {
+            id: idClicked
+          },
+          success: function(data) {
+
+            location.reload()
+
+          },
+          error: function(error) {
+            alert("Theme could not be Duplicated! Reason: "+error)
+          }
+         });        //WORKING
+
+
+      });
+
+      $(".edit_theme").bind('click',function() {
+        idClicked = $(this).attr("id_rel");
+        window.location = "themes/"+idClicked+"/edit"
+      });
+
       $(".settheme").bind('click',function() {
 
         if(!$(this).hasClass("selected") && !waiting) {
@@ -126,8 +182,6 @@
           //send alert "AJAX Fail" for now 
 
         }
-        
-
       })
 
 
@@ -135,5 +189,3 @@
     
   })(jQuery);
 </script>
-
-<%= link_to 'New Theme', new_theme_path %>

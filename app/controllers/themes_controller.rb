@@ -1,8 +1,15 @@
 class ThemesController < ApplicationController
   # GET /themes
   # GET /themes.json
+
+  ## JUST FOR NOW
+
+  CAREER_SITE_ID = 1
+
   def index
-    @themes = Theme.all
+    @themes_all = Theme.all
+    @themes     = Theme.where("career_site_id IS NULL") 
+    @themes_custom = Theme.where("career_site_id = ?", CAREER_SITE_ID)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -21,7 +28,19 @@ class ThemesController < ApplicationController
     end
   end
 
-  def duplicate
+  def clone_theme
+
+    @oldTheme = Theme.find(params[:id])
+    @career_site = CAREER_SITE_ID                     #just for now... don't worry.  ain't nobody got time fo dat
+
+    @newTheme = @oldTheme.dup
+    @newTheme.career_site_id = @career_site
+    @newTheme.theme_name = "#{@oldTheme.theme_name} Copy"
+    @newTheme.templates << @oldTheme.templates.collect { |child_theme| child_theme.dup }
+    @newTheme.save
+
+    render :text => "New theme saved with new ID #{@newTheme.id}"
+
   end
 
   # GET /themes/new
@@ -33,6 +52,7 @@ class ThemesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @theme }
+    
     end
   end
 
@@ -48,6 +68,21 @@ class ThemesController < ApplicationController
     template_id = params["template_id"]
     @template = Template.where("theme_id = ? AND id = ?", theme_id, template_id).first
     render :text => @template.content
+  end
+
+  # POST /themes/:id/save
+  def save_template
+
+    theme = Theme.find(params[:theme_id])
+    @template = theme.templates.find(params[:template_id])
+    new_content = params[:content]
+
+    @template.content = new_content
+    @template.save
+    
+
+    render :text => "#{new_content}"
+  
   end
 
   # POST /themes
@@ -87,14 +122,11 @@ class ThemesController < ApplicationController
 
   # DELETE /themes/1
   # DELETE /themes/1.json
-  def destroy
+  def trash_theme
     @theme = Theme.find(params[:id])
     @theme.destroy
 
-    respond_to do |format|
-      format.html { redirect_to themes_url }
-      format.json { head :no_content }
-    end
+    render :text => "success"
   end
 
   def create_template

@@ -1,6 +1,5 @@
 class Theme < ActiveRecord::Base
   attr_accessible :theme_name, :theme_desc, :career_site_id
-
   has_many :templates, :dependent => :destroy
   belongs_to :career_site
 
@@ -18,7 +17,7 @@ class Theme < ActiveRecord::Base
         template.permalink = path
         template.content   = File.read(path)
         template.save!
-        logger.debug "record written -> #{path}" 
+        logger.debug "record written -> #{path}"
       end
 
 

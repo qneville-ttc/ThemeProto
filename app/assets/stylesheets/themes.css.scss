@@ -1,6 +1,27 @@
 // Place all the styles related to the Themes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+ 
+.clearfix {
+  display: inline-block;
+}
+ 
+html .clearfix {
+  display: block;
+}
+ 
+* html .clearfix {
+  height: 1%;
+}
+
 
 .maincontainer {
 	padding: 25px;
@@ -43,7 +64,7 @@
     background: -ms-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* IE10+ */
     background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
-    border: 1px solid rgba(64,150,238,1);
+    border: 1px solid rgba(30,90,150,1);
     box-shadow: 0px 1px #fff, inset 0px 1px rgba(255,255,255,.4);
     text-align: center;
     display:block;
@@ -51,11 +72,11 @@
   }
 
   .maincontainer form {
-  	width: 400px;
   	margin: 0px auto;
   }
 
   input[type="text"], textarea {
+    font-family: 'Andale Mono';
   	box-shadow: inset 0px 1px 3px rgba(0,0,0,.5) !important;
   	background: #fff;
   	border-radius: 3px;
@@ -82,7 +103,7 @@
     }
 
     #themeswitcher #main_panel #default, #themeswitcher #main_panel #custom {
-      overflow: auto;
+      
     }
 
     #themeswitcher #main_panel.editor {
@@ -92,7 +113,7 @@
     }
 
     #themeswitcher #main_panel.editor textarea {
-      position: absolute;
+      width: 100%;
       max-width: 100%;
       top: 0;
       left: 0;
@@ -197,8 +218,8 @@
       background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
       background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-      color: #333;
-      border: 1px solid #555;
+      color: #444;
+      border: 1px solid #ccc;
       text-shadow: 0px 1px #fff;
       float: left;
     }
@@ -261,6 +282,7 @@
     position: relative;
   }
 
+
   .theme_thumb button, .theme_thumb a {
     width: 100%;
     font-size: 14px;
@@ -277,14 +299,36 @@
     background: -ms-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* IE10+ */
     background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
-    border: 1px solid rgba(64,150,238,1);
+    border: 1px solid rgba(30,90,151,1);
     box-shadow: 0px 1px #fff, inset 0px 1px rgba(255,255,255,.4);
     text-align: center;
     display:inline-block;
     text-decoration: none !important;
+    cursor: pointer;
   }
 
-  .theme_thumb .disabled {
+  .theme_thumb .disabled, button.disabled {
+    width: 100%;
+    font-size: 14px;
+    color: #aaa;
+    text-shadow: 0px 1px #fff;
+    border-radius: 2px;
+    padding: 10px 0px;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(47%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #aaa;
+    box-shadow: 0px 1px #fff, inset 0px 1px rgba(255,255,255,.7);
+    text-align: center;
+  }
+
+
+  .addNew .add, button.add {
     width: 100%;
     font-size: 14px;
     color: #aaa;
@@ -349,10 +393,10 @@
   }
 
   .theme_thumb .thumb_tooltip:after {
-    content: url(image-url(speak-pointer));
+    content: image-url("speak-pointer.png");
     position: absolute;
     left: 80%;
-    bottom: -9px;
+    bottom: -14px;
   }
 
   .theme_thumb .options {
@@ -379,15 +423,19 @@
   }
 
 
-  .theme_thumb .options a {
+  .theme_thumb .options img {
     background: none;
+    float:left;
     border-radius: 3px !important;
     padding: 0px !important;
+    margin: 0;
+    display:block;
     width: 24px;
     height: 24px;
     border: none;
+    cursor:pointer;
   }
-  .theme_thumb .options a:hover {
+  .theme_thumb .options img:hover {
     background: rgba(122,188,255,.6);
   }
 
@@ -398,5 +446,26 @@
     display:none;
   }
   .thumbnail > .loader.load {
+    display:block;
+  }
+
+  .addNew {
+    width: 100px;
+    padding: 10px 10px;
+    opacity: .8;
+    float: left;
+    margin: 5px;
+    cursor: default;
+    position: relative;
+    -webkit-transition: 200ms;
+    opacity: 100%;
+    -moz-transition-duration: 200ms;
+    margin-top: 10px;
+  }
+
+  .addNew .add {
+    color: #222 !important;
+    background: image-url("add.png") no-repeat center center; 
+    height: 109px;
     display:block;
   }

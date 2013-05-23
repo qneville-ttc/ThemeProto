@@ -6,8 +6,13 @@ ThemeProto::Application.routes.draw do
 
   root to: 'themes#index'
 
-  match "themes/:theme_id/get_content/:template_id", :controller => "themes", :action => "get_content", :conditions => { :method => [:get] }
+  match "themes/:theme_id/get_content/:template_id", :controller => "themes", :action => "get_content",   :conditions => { :method => [:get]  }
+  match "themes/:theme_id/save",                     :controller => "themes", :action => "save_template", :conditions => { :method => [:post] }
+  match "themes/clone",                              :controller => "themes", :action => "clone_theme",   :conditions => { :method => [:post] }
+  match "themes/trash",                              :controller => "themes", :action => "trash_theme",   :conditions => { :method => [:post] }
+
   match "career_sites/:theme_id/get_content/:template_id", :controller => "career_sites_controller", :action => "get_content", :conditions => { :method => [:get] }
+
 
   #map.connect    "/install/",:controller => "theme", :action => "unzip_file", :conditions => { :method => [:get,:post] }
   
